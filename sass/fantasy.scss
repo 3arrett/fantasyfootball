@@ -1,0 +1,1237 @@
+// Compiled with Compass. Need help? Check the docs on source.sportngin.com
+
+@import "compass";
+
+
+$text: #4f4f4f;
+$red: #b5121b;
+$green: #419d5e;
+$gold: #d9cd11;
+$blue: #13759b;
+$lightGray: #efefef;
+$gray: #b4bbbf;
+$darkGray: #6b7379;
+
+// Use these fonts with @extend. This normalizes all fonts so the browsers don't hint for bolding.
+$headers: "proxima-nova", Arial, Helvetica, sans-serif;
+$font: 'proxima-nova', Arial, Helvetica, sans-serif;
+
+
+* { -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box;}
+
+/*
+html {background: #eeeeee url(../i/background.jpg) center top no-repeat; color: $text; font-size: 13px; min-height: 100%;}
+body {background: transparent no-repeat; height: 100%;}
+*/
+
+html,body {font-family: $font; color: $text;}
+
+a {@include transition(color 150ms); color: $green;}
+
+h1, h2, h3, h4, h5 {font-family: $headers;}
+h1 {
+	color: $green;
+	margin-bottom: .2em;
+}
+
+table, .textBlockElement p, .textBlockElement li {font-family: $font;}
+
+.clear:after { display:block; height:0; clear:both; content:"."; visibility:hidden; /* For clearing */ }
+
+.noWrap {
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	word-wrap: normal;
+	overflow: hidden;
+}
+
+#topNav tr td.selected a {background: $green;}
+
+#siteHeader {
+	background: none;
+}
+
+.failure {
+	position: fixed;
+	padding: 20px;
+	font-size: 16px;
+	color: #fff;
+	background: $green;
+	display: none;
+	top: 0;
+	left: 0;
+	z-index: 500;
+}
+
+.homeTeam, .awayTeam {background: none;}
+
+/* POSITIONING STYLES */
+
+$width: 1000px;
+
+.heroWrap {
+	height: 400px;
+	width: 100%;
+	overflow: hidden;
+	position: relative;
+}
+
+.newsPage #panelOne {
+	display: none;
+}
+
+.newsPage .dbhWrap.row, .newsPage .spacer {
+	display: none;
+}
+
+.newsItemElement {
+	position: relative;
+}
+
+.newsTags {
+	position: absolute; 
+	top: 108%;
+}
+
+.newsContentNode {
+	margin-top: -40px;
+}
+
+.newsAggregatorElement {
+	.expanded {
+		padding: 0 0 40px;
+		
+		.newsItemElement {
+			h2 {
+				position: absolute;
+				top: 240px;
+				
+				a {
+					display: block;
+					@extend .noWrap;
+				}
+			}
+		}
+		.newsItemHeader {
+			> a {
+				display: block;
+				width: 100%;
+				height: 240px;
+				position: relative;
+				overflow: hidden;
+				
+				img {
+					display: block;
+				}
+			}
+			
+			.newsDate {
+				margin-top: 45px;
+			}
+		}
+	}
+	
+	.condensed {
+		> a {
+			display: block;
+			width: 75px;
+			height: 75px;
+			border-radius: 50%;
+			overflow: hidden;
+			float: left; 
+			margin-right: 20px;
+			
+			img {
+				width: 100%;
+			}
+		}
+	}
+}
+		
+.teamPhoto {
+    display: block;
+    float: left;
+    overflow: hidden;
+    @include border-radius(50%);
+    
+    img {
+	    width: 100%;
+	    display: block;
+    }
+}
+
+.teamLink {
+	display: block;
+}
+
+.cards {
+	margin-bottom: 15px;
+	@extend .clear;
+	
+	&.twoCol .card {
+    	float: left;
+    	width: 48%;
+		
+		&:nth-of-type(2n+1) {
+			margin-left: 0;
+			clear: left;
+		}
+		
+		&:nth-of-type(2n) {
+			margin-right: 0;
+		}
+    }
+	
+	&.threeCol .card {
+    	float: left;
+    	width: 31.33%;
+		
+		&:nth-of-type(3n+1) {
+			margin-left: 0;
+			clear: left;
+		}
+		
+		&:nth-of-type(3n) {
+			margin-right: 0;
+		}
+    }
+	
+	&.fourCol .card {
+    	float: left;
+    	width: 23%;
+		
+		&:nth-of-type(4n+1) {
+			margin-left: 0;
+			clear: left;
+		}
+		
+		&:nth-of-type(4n) {
+			margin-right: 0;
+		}
+    }
+}
+
+.card {
+    margin: 0 1% 2%;
+    background: #fdfdfd;
+    border: 1px solid #efefef;
+    position: relative;
+    @extend .clear;
+    
+    .teamPhoto {
+    	width: 25%;
+    	margin: 10px 4% 15px 10px;
+    }
+    
+    h1 {
+    	font-size: 20px;
+    	color: #6a6a6a;
+    	margin-top: 25px;
+    	margin-bottom: 0;
+    	padding: 0 10% 0 0;
+    	
+    	&.wrapped {
+	    	margin-top: 14px;
+    	}
+    }
+    
+    h3 {
+    	font-size: 16px;
+    	color: #ababab;
+    	margin-bottom: 0;
+    	
+    	.twitter {
+	    	display: inline-block;
+	    	padding-left: 17px;
+	    	background: url(../i/twitter.png) 0 0 no-repeat;
+	    	line-height: 12px;
+	    	margin-left: 15px;
+	    	color: #00aced;
+	    	font-size: 14px;
+	    	position: relative;
+	    	top: -3px;
+    	}
+    	
+    	.espn {
+	    	display: inline-block;
+	    	width: 49px;
+	    	height: 12px;
+	    	background: url(../i/espn.png) 0 0 no-repeat;
+	    	margin-left: 15px;
+    	}
+    }
+    
+    
+    .stats {
+    	background: $lightGray;
+    	margin: 0;
+    	clear: both;
+    	padding: 10px 10px 0;
+    	@extend .clear;
+    	
+    	li {
+    		float: left;
+    		margin: 0;
+    		width: 33.33%;
+    		padding: 4px 10px;
+    		border-right: 1px solid #dfdfdf;
+    		font-size: 20px;
+    		color: #4a4a4a;
+    		list-style: none;
+    		margin-bottom: 10px;
+    		
+    		&:first-of-type {
+    			padding-left: 0;
+    		}
+    		
+    		&:last-of-type {
+    			border:none;
+    			padding-right: 0;
+    		}
+    		
+    		.cat {
+    		    display: block;
+    		    font-size: 10px;
+    		    text-transform: uppercase;
+    		    color: #999
+    		}
+    	}
+    }
+    
+    .league {
+    	font-size: 10px;
+    	font-weight: 500;
+    	color: $green;
+    	text-transform: uppercase;
+    }
+    
+    .ranks {
+	    display: none;
+	    margin-top: 3px;
+	    
+	    li {
+		    list-style: none;
+		    float: left;
+		    font-size: 20px;
+		    text-align: center;
+		    padding: 8px 6px 2px;
+		    background: #f9f9f9;
+		    margin-right: 4px;
+		    line-height: .7em;
+		    
+		    span {
+			    display: block;
+			    font-size: 8px;
+			    text-transform: uppercase;
+			    color: #999;
+		    }
+	    }
+    }
+    
+    .overallRank, .leagueRank {
+	    display: none;
+    }
+    
+    .single & {
+	    margin: 0 0% 2%;
+	    
+	    .teamPhoto {
+		    margin-right: 4%;
+	    }
+	    
+	    h1 {
+		    font-size: 28px;
+		    margin-top: 6%;
+		    margin-bottom: .5%;
+	    }
+	    
+	    h3 {
+		    font-size: 22px;
+	    }
+	    
+	    .league {
+	    	font-size: 14px;
+	    }
+	    
+	    .ranks {
+		    display: block;
+	    }
+	    
+	    .stats li {
+		    width: 25%;
+		    position: relative;
+		    
+		    &:nth-of-type(4n) {
+			    border: none;
+			    padding-right: 0;
+		    }
+		    
+		    &:nth-of-type(5n) {
+			    padding-left: 0;
+		    }
+		    
+		    &:nth-of-type(n+5)::before {
+			    position: absolute;
+			    content: '';
+			    width: 95%;
+			    height: 1px;
+			    border-top: 1px solid #e9e9e9;
+			    top: -6px;
+			    left: 4px;
+		    }
+	    }
+	    
+	    .overallRank, .leagueRank {
+	   		display: block;
+		}
+    }
+}
+
+.schedule {
+	
+	&.twoCol .game {
+    	width: 49%;
+    	float: left;
+		
+		&:nth-of-type(2n+1) {
+			margin-left: 0;
+			clear: left;
+		}
+		
+		&:nth-of-type(2n) {
+			margin-right: 0;
+		}
+	}
+	
+	&.threeCol .game {
+    	width: 32%;
+    	float: left;
+		
+		&:nth-of-type(3n+1) {
+			margin-left: 0;
+			clear: left;
+		}
+		
+		&:nth-of-type(3n) {
+			margin-right: 0;
+		}
+	}
+	
+	&.fourCol .game {
+    	width: 23%;
+    	float: left;
+    	
+    	.homeTeam, .awayTeam {
+	    	font-size: 12px;
+	    	line-height: 2.2em;
+    	}
+		
+		&:nth-of-type(4n+1) {
+			margin-left: 0;
+			clear: left;
+		}
+		
+		&:nth-of-type(4n) {
+			margin-right: 0;
+		}
+	}
+}
+
+.schedule {
+	margin-bottom: 15px;
+	
+	.week {
+		clear: both;
+		padding-top: 40px;
+		
+		h2 {
+			margin-bottom: 10px;
+			
+			span {
+				font-size: .8em;
+				color: $gray;
+			}
+		}
+	}
+	
+	.game {
+    	margin: 0 1% 2%;
+    	background: #fdfdfd;
+    	border: 1px solid #efefef;
+    	position: relative;
+    	padding: 10px;
+    	@extend .clear;
+		
+		.teamPhoto {
+			width: 10%;
+			display: block;
+			float: left;
+			margin-right: 3%;
+		}
+		
+		.teamName {
+			display: block;
+			width: 69%;
+			float: left;
+			color: $text;
+			@extend .noWrap;
+			
+			.record {
+				font-size: .9em;
+				font-weight: 300;
+				color: $gray;
+				margin-left: 4px;
+			}
+			
+			&:hover {
+				color: $green;
+			}
+		}
+		
+		.score {
+			float: left;
+			width: 17%;
+			text-align: right;
+			white-space: nowrap;
+			position: relative;
+			
+			.projected {
+				display: block;
+				line-height: 0;
+				margin-top: -2px;
+				font-size: 9px;
+				color: #b4b4b4;
+			}
+		}
+	
+		.compare {
+			display: none;
+		    text-align: right;
+		    padding: 0 10% 0;
+			font-size: 13px;
+			line-height: 18px;
+			clear: both;
+		    
+		    li {
+			    list-style: none;
+		    }
+		    
+		    &.key {
+			    position: absolute;
+			    left: 50%;
+			    top: 53px;
+			    width: 100px;
+			    margin-left: -50px;
+			    font-size: 9px;
+			    text-transform: uppercase;
+				text-align: center;
+				padding: 0;
+				color: $green;
+		    }
+		}
+	
+		.awayTeam {
+			padding-bottom: 7px;
+		}
+		
+		.homeTeam, .awayTeam {
+			background: none;
+			@extend .clear;
+			font-size: 14px;
+			line-height: 2.2em;
+			@include transition(all 175ms ease-in);
+			
+			&.boom {
+				font-weight: 700;
+			}
+			
+			&.loser {
+				opacity: .5;
+			}
+		}
+		
+		&:hover {
+			.homeTeam.loser, .awayTeam.loser {
+				opacity: 1;
+			}
+		}
+	}
+	
+	&.individual {
+		.week {
+			padding-top: 10px;
+		}
+	}
+	
+	&.next {
+		.game {
+			margin: 0 0 2%;
+		}
+	}
+	
+	&.list, &.list.fourCol, &.list.threeCol, &.list.twoCol {
+		.game {
+			width: 100%;
+			float: none;
+			margin: 0;
+			cursor: pointer;
+			border-bottom: none;
+			
+			&:last-of-type {
+				border-bottom: 1px solid #efefef;
+			}
+			
+			.homeTeam, .awayTeam {
+				float: left;
+				width: 48%;
+				font-size: 16px;
+			}
+			
+			.teamName {
+				width: 71%;
+			}
+				
+			.teamPhoto {
+			    width: 9%;
+			}
+			
+			.awayTeam {
+				padding-left: 2%;
+				padding-bottom: 0;
+			}
+			
+			.score {
+				margin-bottom: 10px;
+			}
+			
+			.homeTeam {
+				margin-left: 4%;
+				padding-right: 2%;
+				
+				.teamPhoto, .teamName {
+					float: right;
+					text-align: right;
+				}
+				
+				.teamPhoto {
+					margin-left: 3%;
+					margin-right: 0%;
+				}
+				
+				.score {
+					text-align: left;
+				}
+				
+				.compare {
+					text-align: left;
+				}
+			}
+		}
+	}
+}
+
+.weeklyFilter {
+	position: absolute;
+
+	ul {
+		width: 970px;
+		margin: 0 auto;
+	}
+		
+	li {
+		display: inline-block;
+		list-style: none;
+		
+		a {
+			display: block;
+			color: #fff;
+			font-size: 13px;
+			background: $green;
+			border-right: 1px solid darken($green, 5%);
+			border-left: 1px solid lighten($green, 5%);
+			padding: 2px 8px;
+			line-height: 2em;
+			white-space: nowrap;
+			@include transition(all 175ms ease-in);
+			
+			&:hover, &.selected {
+				background-color: lighten($green, 15%);
+				color: #fff;
+			}
+			
+			&.scheduleLink[data-style="block"] {
+				margin-left: 15px;
+			    border-radius: 4px 0 0 4px;
+			    text-indent: -999em;
+			    background-image: url(../i/iconBlock.png);
+			    background-position: center center;
+			    width: 35px;
+			}
+			
+			&.scheduleLink[data-style="list"] {
+			    text-indent: -999em;
+			    background-image: url(../i/iconList.png);
+			    background-position: center center;
+			    width: 35px;
+			}
+		}
+			
+		&:first-of-type {
+			a {
+			    border-radius: 4px 0 0 4px;
+			    border-left: none;
+			}
+		}
+			
+		&:last-of-type, &:nth-of-type(13) {
+			a {
+			    border-radius: 0 4px 4px 0;
+			    border-right: none;
+			}
+		}
+	}
+	
+	&.fixed {
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100%;
+		z-index: 500;
+		
+		li a.scheduleLink[data-style="block"] {
+			    border-radius: 0 0 0 4px;
+			}
+		
+		li:first-of-type {
+			a {
+				border-radius: 0 0 0 4px;
+			}
+		}
+		
+		li:last-of-type, li:nth-of-type(13) {
+			a {
+				border-radius: 0 0 4px 0;
+			}
+		}
+	}
+}
+
+.playoffs {
+	.championship {
+		width: 40%;
+		float: left;
+		
+		h1 {
+			text-align: center;
+		}
+		
+		.game {
+			margin-top: 17%;
+		}
+	}
+
+	.bracket {
+		width: 30%;
+		margin: 0;
+		float: left;
+		
+		> h1 {
+			text-align: center;
+			font-size: 1.4em;
+		}
+	
+		.round {
+		    float: left;
+		    margin-right: 3%;
+		    
+		    > h1 {
+			    font-size: .8em;
+			    text-align: center;
+			    text-transform: uppercase;
+		    }
+		}
+		
+		&.right {
+			float: right;
+			
+			.round {
+				float: right;
+			    margin-right: 0%;
+			    margin-left: 3%;
+			}
+		}
+		
+		&[data-rounds="2"] .round {width: 47%}
+		&[data-rounds="3"] .round {width: 30%}
+		
+		&[data-rounds="2"] .round2, &[data-rounds="3"] .round3 {
+			.game1 {
+				margin-top: 50%;
+			}
+		}
+	}
+	
+	.game {
+    	margin: 0 1% 2%;
+    	background: #fdfdfd;
+    	border: 1px solid #efefef;
+    	position: relative;
+    	padding: 10px;
+    	@extend .clear;
+    	
+    	.seed {
+	    	float: left;
+	    	margin-right: 5%;
+	    	display: inline-block;
+	    	width: 4%;
+	    	font-weight: 900;
+    	}
+		
+		.teamPhoto {
+			width: 10%;
+			display: none;
+			float: left;
+			margin-right: 3%;
+		}
+		
+		.teamName {
+			display: block;
+			width: 71%;
+			float: left;
+			color: $text;
+			
+			.record {
+				font-size: .9em;
+				font-weight: 300;
+				color: $gray;
+				margin-left: 4px;
+				display: block;
+			}
+			
+			&:hover {
+				color: $green;
+			}
+		}
+		
+		.score {
+			float: left;
+			width: 17%;
+			text-align: right;
+			white-space: nowrap;
+			position: relative;
+			
+			.projected {
+				display: block;
+				line-height: 0;
+				margin-top: -2px;
+				font-size: 9px;
+				color: #b4b4b4;
+			}
+		}
+	
+		.compare {
+			display: none;
+		    text-align: right;
+		    padding: 0 10% 0;
+			font-size: 13px;
+			line-height: 18px;
+			clear: both;
+		    
+		    li {
+			    list-style: none;
+		    }
+		    
+		    &.key {
+			    position: absolute;
+			    left: 50%;
+			    top: 53px;
+			    width: 100px;
+			    margin-left: -50px;
+			    font-size: 9px;
+			    text-transform: uppercase;
+				text-align: center;
+				padding: 0;
+				color: $green;
+		    }
+		}
+	
+		.homeTeam {
+			padding-bottom: 7px;
+		}
+		
+		.homeTeam, .awayTeam {
+			background: none;
+			@extend .clear;
+			font-size: 12px;
+			line-height: 1.4em;
+			min-height: 48px;
+			@include transition(all 175ms ease-in);
+			
+			&.boom {
+				font-weight: 700;
+			}
+			
+			&.loser {
+				opacity: .5;
+			}
+		}
+		
+		&.TBD {
+			min-height: 125px;
+			padding-top: 52px;
+			
+			h1 {
+				text-align: center;
+				color: $gray;
+				font-weight: 500;
+			}
+		}
+		
+		.leftTeam, .rightTeam {
+			width: 50%;
+			float: left;
+			
+			.teamPhoto {
+				display: block;
+				margin: 0 auto 2%;
+				width: 60%;
+				float: none;
+			}
+			
+			.teamName {
+				font-size: 18px;
+				text-align: center;
+				width: 100%;
+			}
+		}
+		
+		&:hover {
+			.homeTeam.loser, .awayTeam.loser {
+				opacity: 1;
+			}
+		}
+	}
+	
+}
+
+.statTable, .dataTable {
+	th {
+		color: $green;
+		background: none;
+		padding: 6px;
+		border: none;
+		font-weight: 500;
+		font-size: 12px;
+	}
+	
+	td {
+		padding: 6px;
+		border: none;
+		background: #fdfdfd;
+		border: 1px solid #efefef;
+		font-size: 14px;
+		@include transition(all 175ms ease-in);
+	}
+	
+	tr {
+		//border-bottom: 2px solid #fff;
+	}
+	
+	tbody {
+		background: #fff;
+		padding: 3px;
+		
+		tr:hover {
+		    td {
+		    	background: lighten($lightGray, 2%);
+		    }
+		}
+	}
+	
+	thead {
+		tr {border: none;}
+	}
+	
+	.highlight {
+		background: $lightGray;
+		
+		td {
+			background: $lightGray;
+		}
+	}
+	
+	.rank {
+		width: 2%;
+	}
+
+	.team {
+		width: 30%;
+		text-align: left;
+	}
+	
+	.teamLink {
+		color: $text;
+		line-height: 2.3em;
+		
+		&:hover {
+			color: $green;
+		}
+		
+		span {
+			color: #b4b4b4;
+		}
+	}
+
+	.teamPhoto {
+		width: 12%;
+		margin-right: 3%;
+		max-width: 32px;
+	}
+}
+
+.standings, .projections, .power {
+	margin-bottom: 15px;
+	
+	td, th {
+		text-align: center;
+	}
+	
+	.pe33 &, .pe25 & {
+		.lWins, .lLosses, .lWPct, .rank, .super, .oWPct, .league, .draft {
+			display: none;
+		}
+		
+		.team {
+			width: 60%;
+		}
+		
+		.teamLink {
+			line-height: 1.5em;
+		}
+		
+		.statTable td, .dataTable td {
+			font-size: 12px;
+		}
+	}
+}
+
+.records {
+	margin-bottom: 25px;
+
+	h1 {
+		margin-bottom: 10px;
+	}
+
+	.record0 {
+		.team {
+			width: 60%;
+		}
+		
+		.teamPhoto {
+			max-width: 75px;
+		}
+		
+		.teamLink {
+			margin-top: 10px;
+		}
+		
+		td {
+			font-size: 1.8em;
+			font-weight: 800;
+		}
+	}
+}
+
+.projections {
+	.team {
+		width: 60%;
+	}
+}
+
+.trophy {
+	margin-bottom: 15px;
+	@extend .clear;
+	
+	h3 {
+		font-weight: 500;
+		font-style: italic;
+		font-size: 16px;
+	}
+	
+	.trophyList {
+		padding-top: 10px;
+	}
+	
+	li {
+		width: 48px;
+		height: 48px;
+		border-radius: 50%;
+		background: $lightGray;
+		list-style: none;
+		position: relative;
+		float: left;
+		margin-right: 8px;
+		@include transition(all 300ms cubic-bezier(0.000, 1.335, 0.330, 1.120));
+		
+		span {
+			display: block;
+			width: 180px;
+			position: absolute;
+			bottom: 120%;
+			left: -999em;
+			margin-left: -90px;
+			padding: 10px;
+			background: $lightGray;
+			text-align: center;
+			border-radius: 2px;
+			box-shadow: 0 0 5px rgba(0,0,0,.2);
+			opacity: 0;
+			@include transition(opacity 200ms ease-in);
+			
+			h2 {
+				margin-bottom: 5px;	
+			}
+			
+			h3 {
+				font-weight: 300;
+				color: darken($gray, 20%);
+				font-size: 12px;
+				margin-bottom: 0;
+			}
+			
+			h4 {
+				font-weight: 500;
+				color: $gray;
+			}
+			
+			h5 {
+				font-weight: 500;		  	
+				color: $green;			  	
+				text-transform: uppercase;	
+			}
+			
+			&:after {
+				position: absolute;
+				width: 20px;
+				left: 50%;
+				margin-left: -10px;
+				display: block;
+				height: 20px;
+				content: '';
+				bottom: -20px;
+			}
+		}
+		
+		&::after {
+			position: absolute;
+			width: 100%;
+			height: 100%;
+			content: '';
+			display: block;
+			background: url(../i/trophy.png) center center no-repeat;
+			left: 0;
+			top: 0;
+			background-size: 100% 100%;
+			@include transition(all 300ms cubic-bezier(0.000, 1.335, 0.330, 1.120));
+		}
+		
+		&:hover {
+			@include transform(scale(1.3));
+			
+			span {
+				left: 50%;
+				opacity: 1;
+				@include transform(scale(.8));
+			}
+			
+			&::after {
+				top: 100%;
+			}
+		}
+		
+	}
+
+	@each $trophy in leagueChampion, firstLoser, theMarshallFaulkMemorialTrophy, dontCallItAComebackComeback, theBieberFanClub, showMeTheMoney, lifeIsNotFair, theMuscleHamster, getGramaticad, neilRackersSpecial {
+		.#{$trophy} {
+		  background: url('../i/icons/#{$trophy}.jpg') center center no-repeat transparent;
+		  background-size: 100% 100%;
+		}
+	}
+}
+
+
+
+.history {
+	margin-bottom: 15px;
+	@extend .clear;
+	
+	h3 {
+		font-weight: 500;
+		font-style: italic;
+		font-size: 16px;
+		padding-top: 10px;
+	}
+}
+
+.history, .schedule, .standings, .cards, .trophy, .projections, .power {
+	opacity: 0;
+}
+
+.siteContainer {
+	border: none;
+}
+
+$name: progress; 
+$animation: $name 6s ease-in-out 1;
+
+@mixin animations {
+	-webkit-animation: $animation;
+	   -moz-animation: $animation;
+	    -ms-animation: $animation;
+	     -o-animation: $animation;
+	        animation: $animation;
+}
+
+@mixin keyframe {
+	@-webkit-keyframes $name {
+	    @include keyframes
+	}
+	@-moz-keyframes $name {
+	    @include keyframes
+	}
+	@-ms-keyframes $name {
+	    @include keyframes
+	}
+	@-o-keyframes $name {
+	    @include keyframes
+	}
+	@keyframes $name {
+	    @include keyframes
+	}
+}	
+
+#progress {
+	background: $green;
+	display: block;
+	height: 2px;
+	position: fixed;
+	top: 0;
+	left: 0;
+	box-shadow: 0 0 10px $green, 0 0 5px $green;
+	width: 80%;
+	z-index: 499;
+	@include animations;
+	
+}
+
+@mixin keyframes { 
+    0% {width: 0%;} 
+    5% {width: 10%;} 
+    10% {width: 22%;} 
+    13% {width: 30%;} 
+    25% {width: 38%;} 
+    45% {width: 50%;} 
+    60% {width: 60%;} 
+    100% {width: 80%;}
+}
+@include keyframe;
