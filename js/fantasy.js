@@ -1,12 +1,59 @@
 (function($){
+	
+	var SPREADSHEET_ID = "0Ah6cKfaqWxfvdEx3cHJlRE9rNE01UjM5czdCeWlyMVE";
+	var _TEAMS = 1;
+	var _LEAGUES = 2;
+	var _SCHEDULE = 3;
+	var _TROPHY_WINNERS = 4;
+	var _SCORES = 5;
+	var _STANDINGS = 6;
+	var _HISTORY = 7;
+	var _PROJECTIONS = 8;
+	var _TROPHIES = 9;
+	var _PLAYOFF_TEAMS = 11;
+	var _CONFERENCES = 12;
+	var _PLAYOFF_SCHEDULE = 13;
+	var _PLAYOFF_SCORES = 14;
 
 	var teams, schedule, leagues, conferences, trophies, standings, history, projections, playoffs, playoffSchedule, playoffScores;
 	var currentWeek;
 	var FFsession = false;
 	
-	function getData(table){
-	    return $.get('http://' + window.location.host + '/page_element/ajax/'+ table +'.json');
+	function getData(sheet){	    
+	    return $.getJSON('https://spreadsheets.google.com/feeds/list/' + SPREADSHEET_ID + '/'+ sheet +'/public/basic?alt=json');
 	}
+	
+	function convertJSONtoObjects(data) {
+		var dataset = data.feed.entry;
+		var dataTitle = data.feed.title.$t;
+		
+		var objectArray = [];
+		
+		$.each(dataset, function(i, entry) {
+			var returnObject = {};
+			console.log(entry);
+			
+			var contents = entry.content;
+			
+			var objectString = contents.$t;
+			objectString = objectString.split(',');
+			
+			$.each(objectString, function(k, keyValue) {
+			    var keyValues = keyValue.split(':');
+			    var keys = keyValues[0];
+			    var values = keyValues[1];
+			    
+			    returnObject[keys] = values;
+			});
+			
+			returnObject["objectID"] = entry.title.$t;
+			console.log(returnObject);
+		});
+	}
+	
+	$.when(getData(_LEAGUES)).done(function(teamData) {
+		var teamTest = convertJSONtoObjects(teamData);
+	});
 	
 	if (sessionStorage.leagues) {
 		// Using sessionStorage to make it faster. Must JSON.parse twice because browsers only store locally as Strings
@@ -26,36 +73,36 @@
 		currentWeek = sessionStorage.currentWeek;
 		FFsession = true;
 	} else {
-		$.when(getData(34165705),
-			   getData(43822945),
-			   getData(34165706),
-			   getData(34165707),
-			   getData(34203274),
-			   getData(34206192),
-			   getData(34248833),
-			   getData(34580984),
-			   getData(35226600),
-			   getData(35625525),
-			   getData(43822793),
-			   getData(43838538),
-			   getData(43838543)
+		$.when(getData(_LEAGUES),
+			   getData(_CONFERENCES),
+			   getData(_TEAMS),
+			   getData(_SCHEDULE),
+			   getData(_TROPHY_WINNERS),
+			   getData(_SCORES),
+			   getData(_STANDINGS),
+			   getData(_HISTORY),
+			   getData(_PROJECTIONS),
+			   getData(_TROPHIES),
+			   getData(_PLAYOFF_TEAMS),
+			   getData(_PLAYOFF_SCHEDULE),
+			   getData(_PLAYOFF_SCORES)
 		).done(function(leaguesData, conferencesData, teamsData, scheduleData, trophyWinnersData, scoresData, standingsData, historyData, projectionsData, trophyData, playoffData, playoffScheduleData, playoffScoresData){
-			leagues = leaguesData[0];
-			conferences = conferencesData[0];
-			teams = teamsData[0];
-			scores = scoresData[0];
-			schedule = scheduleData[0];
-			trophies = trophyWinnersData[0];
-			trophyDetails = trophyData[0];
-			standings = standingsData[0];
-			history = historyData[0];
-			projections = projectionsData[0];
-			playoffs = playoffData[0];
-			playoffSchedule = playoffScheduleData[0];
-			playoffScores = playoffScoresData[0];
+			leagues = leaguesData;
+			conferences = conferencesData;
+			teams = teamsData;
+			scores = scoresData;
+			schedule = scheduleData;
+			trophies = trophyWinnersData;
+			trophyDetails = trophyData;
+			standings = standingsData;
+			history = historyData;
+			projections = projectionsData;
+			playoffs = playoffData;
+			playoffSchedule = playoffScheduleData;
+			playoffScores = playoffScoresData;
 			currentWeek = getCurrentWeek();
 			
-			sessionStorage.setItem('leagues', JSON.stringify(leagues));
+			/*sessionStorage.setItem('leagues', JSON.stringify(leagues));
 			sessionStorage.setItem('conferences', JSON.stringify(conferences));
 			sessionStorage.setItem('teams', JSON.stringify(teams));
 			sessionStorage.setItem('scores', JSON.stringify(scores));
@@ -68,7 +115,7 @@
 			sessionStorage.setItem('playoffs', JSON.stringify(playoffs));
 			sessionStorage.setItem('playoffSchedule', JSON.stringify(playoffSchedule));
 			sessionStorage.setItem('playoffScores', JSON.stringify(playoffScores));
-			sessionStorage.setItem('currentWeek', JSON.stringify(currentWeek));
+			sessionStorage.setItem('currentWeek', JSON.stringify(currentWeek));*/
 		
 			$('body').trigger('dataReady');
 		}).fail(function() {
