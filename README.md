@@ -1,9 +1,9 @@
 28 person Fantasy Football League
 ===============
 
-A 28-team league comprised of 2 separate 14-team leagues (held on ESPN Fantasy) playing under the same ruleset and uses combined standings. Utilized for the inaguaral season of the Sport Ngin Cup. This is the collection of assets used for it. Probably a little raw and could easily rewrite a bunch of it.
+A 28-team league comprised of 2 separate 14-team leagues playing under the same ruleset and uses combined standings. Utilized for the inaguaral season of the Sport Ngin Cup. This is the collection of assets used for it. Probably a little raw and could easily rewrite a bunch of it.
 
-SNFF loads in JSON data and then stores it in `sessionStorage` for quicker page loads. 
+SNFF doesn't scrape any data or use an API, just uses Google Spreadsheets as a database. It loads in JSON data and then stores it in `sessionStorage` for quicker page loads. 
 
 You can see the project in action at http://ff.sportngin.com/
 
