@@ -624,7 +624,7 @@
 				$(this).addClass('individual');
 				var individualSchedule = true;
 			} else if ($(this).attr('data-type') === 'next') {
-				var sched = getWeekSchedule(currentWeek);
+				var sched = getWeekSchedule(currentWeek, leagueID, season);
 			} else if ($(this).attr('data-type') === 'matchup') {
 				var week = $(this).attr('data-week');
 				var team1 = $(this).attr('data-team1');
@@ -1033,7 +1033,10 @@
 						    }
 						}
     				}
-    			}
+    			} else if (record === "highestMargin" || record === "lowestMargin") {
+                    var seasonSchedule = league.seasons[season].schedule;
+                    records = records.concat(scoringMarginsForSchedule(seasonSchedule));
+                }
     		}
 
     		if (record === "wins" || record === "winpct") {
@@ -1066,6 +1069,24 @@
 					categories = ["teamID", "score", "week", "season"];
     			}
     			break;
+                case "highestMargin" : {
+                    // Sort scores  
+                    records.sort(function(a,b) {
+                        return sorting(a.difference,b.difference)
+                    });
+                    $(this).prepend('<h1>Highest Winning Margin</h1>');
+                    categories = ["winner", "loser", "score", "difference", "week", "season"];
+                } 
+                break;
+                case "lowestMargin" : {
+                    // Sort scores  
+                    records.sort(function(b,a) {
+                        return sorting(a.difference,b.difference)
+                    });
+                    $(this).prepend('<h1>Lowest Winning Margin</h1>');
+                    categories = ["winner", "loser", "score", "difference", "week", "season"];
+                } 
+                break;
     			case "winpct" : {
 					$(this).prepend('<h1>All-time Winning Percentage</h1>');
 					// Sort scores	
@@ -1100,7 +1121,7 @@
     				recordsTable.find('tbody').append('<tr class="record'+i+'" />');
     				for (var j = 0; j < categoriesArr.length; j++) {
 						var category = categoriesArr[j];
-						if (category === "teamID") {
+						if (category === "teamID" || category === "winner" || category === "loser") {
 							var seas = recordTeam.season ? recordTeam.season : null;
 							recordsTable.find('.record'+i).append('<td class="team">'+getTeamPhoto(recordTeam[category])+getTeamLink(recordTeam[category], seas)+'</td>');
 						} else if (category === "winloss") {
@@ -1113,6 +1134,16 @@
     		}
     	
     	});
+
+        $('.margins').each(function() {
+            var leagueID = $(this).attr('data-league');
+            var season = $(this).attr('data-season');
+            var week = $(this).attr('data-week');
+
+            var weeklyScores = getWeekSchedule(week, leagueID, season);
+            var margins = scoringMarginsForSchedule(weeklyScores);
+            var sorting = $(this).attr('data-sort');
+        });
     	
     	
     	$('.playoffs').each(function() {
@@ -1411,9 +1442,9 @@
 	    return filter;
     }
 	
-    function getWeekSchedule(ID) {
-	    var filter = schedule.filter(function (el) {
-	      return el.week == ID;
+    function getWeekSchedule(week, leagueID, year) {
+	    var filter = leagues[parseInt(leagueID) - 1].seasons[year].schedule.filter(function (el) {
+	      return el.week == week;
 	    });
 	    return filter;
     }
@@ -1965,6 +1996,19 @@
 	    
 	    return (points / (currentWeek-1)).toFixed(2);
 	}
+
+    function scoringMarginsForSchedule(scheduleGames) {
+        var differences = [];
+        for (var i = 0; i < scheduleGames.length; i++) {
+            var game = scheduleGames[i];
+            if (game.homeTeamScore > game.awayTeamScore) {
+                differences.push({"difference" : (game.homeTeamScore - game.awayTeamScore).toFixed(2), "winner" : game.homeTeam, "loser" : game.awayTeam, "score" : game.homeTeamScore + "-" + game.awayTeamScore, "week" : game.week, "season" : game.season})
+            } else if (game.homeTeamScore < game.awayTeamScore) {
+                differences.push({"difference" : (game.awayTeamScore - game. homeTeamScore).toFixed(2), "winner" : game.awayTeam, "loser" : game.homeTeam, "score" : game.awayTeamScore + "-" + game.homeTeamScore, "week" : game.week, "season" : game.season})
+            }
+        }
+        return differences;
+    }
 	
 	// Sport Ngin Platform Work:
 	$('.newsAggregatorElement .item').each(function() {
