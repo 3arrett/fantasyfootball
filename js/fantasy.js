@@ -1046,6 +1046,9 @@
 					if (isNaN(winpct)) {
 						winpct = 0;
 					}	
+                    if (record === "winpct" && (team.historicalRecords.wins + team.historicalRecords.losses) < 14) {
+                        break;
+                    }
 					records.push({'teamID': team.teamID, 'wins': team.historicalRecords.wins, 'losses': team.historicalRecords.losses, 'winpct': winpct.toFixed(3), "seasons" : team.historicalRecords.seasons.length });
 				}
     		}
@@ -1142,7 +1145,24 @@
 
             var weeklyScores = getWeekSchedule(week, leagueID, season);
             var margins = scoringMarginsForSchedule(weeklyScores);
-            var sorting = $(this).attr('data-sort');
+            var sorted = $(this).attr('data-sort');
+
+            margins.sort(function(a,b) {
+                return sorting(a.difference,b.difference)
+            });
+
+            $(this).append('<table class="dataTable" />');
+            var marginTable = $(this).find('.dataTable');
+
+            marginTable.append('<thead><tr><th class="winner">Winner</th><th class="loser">Loser</th><th class="difference">Difference</th></tr></thead>')
+            marginTable.append('<tbody />');
+
+            var marginTableBody = marginTable.find('tbody');
+
+            for (var m = 0; m < margins.length; m++) {
+                var matchup = margins[m];
+                marginTableBody.append('<tr><td class="winner">'+getTeamPhoto(matchup.winner)+getTeamLink(matchup.winner)+'</td><td class="loser">'+getTeamPhoto(matchup.loser)+getTeamLink(matchup.loser)+'</td><td class="difference">'+matchup.difference+' <span class="score">('+matchup.score+')</span></td></tr>');
+            }
         });
     	
     	
